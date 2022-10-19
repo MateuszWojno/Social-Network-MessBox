@@ -1,0 +1,190 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+* #menu {
+  background-color: black;
+  color: #5CDB95;
+}
+* #panelMenu {
+  cursor: pointer;
+}
+* .bg-mat:hover {
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+}
+* .text-mat:hover {
+  color: black;
+}
+* li a {
+  color: white;
+}
+* li a:hover {
+  color: black;
+}
+* .nav-link {
+  font-size: 20px;
+}
+* #userBoard {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  color: black;
+  font-weight: bold;
+}
+* #rowBirthDate {
+  padding: 10px;
+}
+* #rowEmail {
+  padding: 10px;
+}
+* #rowSchool {
+  padding: 10px;
+}
+* #rowNumberPhone {
+  padding: 10px;
+}
+* #rowGender {
+  padding: 10px;
+}
+* #rowMartialStatus {
+  padding: 10px;
+}
+* #rowWork {
+  padding: 10px;
+}
+* #rowPlaceLiving {
+  padding: 10px;
+}
+* #avatar img {
+  height: 200px;
+  width: 200px;
+  border: 5px solid black;
+}
+* #userName {
+  font-size: 30px;
+  margin-top: 50px;
+}
+* #friendStatus {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  margin-top: 20px;
+  min-width: 120px;
+}
+* #friendsButton {
+  background-color: black;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  min-width: 120px;
+}
+* #photoViewButton {
+  background-color: black;
+  padding: 15px;
+  text-decoration: none;
+  color: white;
+  min-width: 120px;
+}
+* #colFriends {
+  text-align: center;
+}
+* #colPhotoView {
+  text-align: center;
+}
+* #colConversation {
+  text-align: center;
+}
+* #colStatus {
+  text-align: center;
+}
+* #conversationButton {
+  background-color: black;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  min-width: 120px;
+}
+* #onlineStatus {
+  padding: 10px;
+  color: white;
+  min-width: 120px;
+}
+* #offlineStatus {
+  padding: 10px;
+  color: white;
+  min-width: 120px;
+}
+* main {
+  background-color: black;
+  padding-top: 120px;
+}
+* #postModule {
+  min-height: 800px;
+}
+* h1 {
+  text-align: center;
+  color: white;
+}
+* .buttonPostPublish {
+  float: right;
+}
+* .authorPost {
+  color: white;
+  font-weight: bold;
+  margin: 0;
+  padding-left: 15px;
+}
+* .timePostPublish {
+  color: white;
+  font-weight: bold;
+  padding-right: 15px;
+}
+* #post {
+  margin-top: 20px;
+  font-size: 18px;
+  background-color: white;
+}
+* #dataPost {
+  background-color: black;
+  padding: 10px;
+}
+* #containerPost {
+  background-color: white;
+  color: black;
+}
+* .contentPost {
+  padding: 12px;
+}
+* .likeButton {
+  background-color: #87CEFA;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+* .dislikeButton {
+  background-color: #87CEFA;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+* #likeFont {
+  font-weight: bold;
+  padding-left: 15px;
+  color: white;
+}
+* #dislikeFont {
+  font-weight: bold;
+  padding-left: 15px;
+  color: white;
+}
+* #colPostReaction i {
+  font-size: 25px;
+  color: white;
+}
+
+/*# sourceMappingURL=profile.css.map */

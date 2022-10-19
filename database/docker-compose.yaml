@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: messbox
+    environment:
+      MYSQL_DATABASE: "messbox"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: "messbox"
+      MYSQL_PASSWORD: "messbox"
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./messbox_structure.sql:/docker-entrypoint-initdb.d/messbox_structure.sql

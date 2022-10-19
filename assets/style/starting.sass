@@ -1,0 +1,93 @@
+$black-color: black
+$white-color: white
+$red-color: red
+
+@mixin header
+ background-color: $black-color
+ color: $white-color
+ width: 100%
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+
+  html, body
+   background-image: linear-gradient(to right, #000000, #87CEFA)
+   position: relative
+
+  #menu
+   background-color: $black-color
+   color: #5CDB95
+
+  .nav-link
+   font-size: 20px
+
+  .bg-mat:hover
+   background-color: $white-color
+   border-radius: 5px
+   color: $red-color
+
+  .text-mat:hover
+    color: $black-color
+
+  li a
+   color: $white-color
+   &:hover
+    color: $red-color
+
+  #startingPage
+   margin-top: 100px
+
+  #image img
+   border: 5px solid $white-color
+   border-top-left-radius: 5%
+   border-bottom-right-radius: 5%
+   width: 100%
+   height: auto
+
+  #logging
+   margin-top: 100px
+   z-index: 1
+   background-color: $white-color
+
+  #loggingHeader
+    @include header()
+
+  #registrationHeader
+   @include header()
+
+  #registration
+   background-color: $white-color
+   margin-top: 100px
+   z-index: 1
+
+  .success
+   background-color: #343a40
+   text-align: center
+   margin-bottom: 20px
+   color: greenyellow
+   font-weight: bold
+   font-size: 30px
+
+  .error
+   color: $red-color
+
+  .form input
+   display: block
+   background-color: azure
+   outline: none
+   border: none
+   height: 35px
+   width: 100%
+
+  .form label
+   color: $black-color
+   font-weight: bold
+
+  input[type=submit]
+   background-color: $red-color
+   color: darkgrey
+   font-weight: bold
+   font-size: 30px
+

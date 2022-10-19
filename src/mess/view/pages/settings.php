@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MessBox</title>
+    <meta name="author" content="Mateusz Wojno">
+    <meta name="description" content="Portal społecznościowy"/>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/settings.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar  navbar-expand-xl" id="menu">
+    <form class="form-inline" action="search.php" method="post">
+        <div class="md-form active-cyan active-cyan-2">
+            <input class="form-control mr-3  mr-3" name="search" placeholder="Wyszukaj" aria-label="Search">
+        </div>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-5" type="submit" name="sub">
+            <i class="fas fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+    <button class="navbar-toggler btn btn-danger"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mainmenu"
+            aria-controls="mainmenu"
+            aria-expanded="false"
+            aria-label="Przełącznik nawigacji">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainmenu">
+        <ul class="navbar-nav mr-auto col-xl-7 bg-f2 d-flex justify-content-between">
+            <li class="nav-item bg-mat">
+                <a class="nav-link" href="<?= htmlEntities($this->profile->profileUrl()) ?>">
+                    <i class="fas fa-user mr-2"></i>
+                    Profile
+                </a>
+            </li>
+            <li class="nav-item bg-mat">
+                <a class="nav-link" href="<?= htmlEntities($this->profile->photoUrl()) ?>">
+                    <i class="fas fa-images mr-2"></i>
+                    PhotoView
+                </a>
+            </li>
+            <li class="nav-item bg-mat text-mat">
+                <a class="nav-link" href="<?= htmlEntities($this->profile->notificationUrl()) ?>">
+                    <i class="fas fa-bell mr-2"></i>
+                    Notification
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons col-xl-3 bg-f1  d-flex justify-content-end">
+            <li class="nav-item dropdown" id="panelMenu">
+                <a class="nav-link dropdown-toggle mr-2" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user mr-2"></i>Panel
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                     aria-labelledby="navbarDropdownMenuLink-333">
+                    <a class="dropdown-item" href="statistics.php">Statystyki</a>
+                    <a class="dropdown-item" href="account.php">Ustawienia konta</a>
+                    <a class="dropdown-item" href="settings.php">Ustawienia profilu</a>
+                    <a class="dropdown-item" href="logout.php">Wyloguj się</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-5">
+        <h1 class="text-light">ZAKTUALIZUJ SWOJE DANE</h1>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light input-icons">
+                <label>Dodaj zdjęcie</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFileLang" lang="pl-Pl" name="photo">
+                    <label class="custom-file-label border border-dark" for="customFileLang">Wybierz zdjęcie</label>
+                    <? if ($this->validation->failed("photo")): ?>
+                        <span class="error">
+                            <?= htmlSpecialChars($this->validation->message("photo")); ?>
+                        </span>
+                    <? endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light input-icons">
+                <label>Awatar</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFileLang" lang="pl-Pl" name="avatar">
+                    <label class="custom-file-label border border-dark" for="customFileLang">Wybierz awatar</label>
+                    <? if ($this->validation->failed("avatar")): ?>
+                        <span class="error">
+                            <?= htmlSpecialChars($this->validation->message("avatar")); ?>
+                        </span>
+                    <? endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Nazwisko</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 text-light input-icons">
+                <input name="lastName" class="form-control border border-dark">
+                <? if ($this->validation->failed("lastName")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("lastName")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Praca</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 text-light input-icons">
+                <input name="work" class="form-control border border-dark">
+                <? if ($this->validation->failed("work")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("work")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Szkoła</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 text-light input-icons">
+                <input name="school" class="form-control border border-dark">
+                <? if ($this->validation->failed("school")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("school")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Związek</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 text-light input-icons">
+                <select class="browser-default custom-select border border-dark" name="relationship">
+                    <option value="">Wybierz status</option>
+                    <option value="Wolny">Wolny</option>
+                    <option value="W związku">W związku</option>
+                    <option value="Zaręczony">Zaręczony</option>
+                    <option value="W związku małżeńskim">W związku małżeńskim</option>
+                    <option value="W separacji">W separacji</option>
+                    <option value="Rozwiedziony">Rowiedziony</option>
+                    <option value="Wdowiec">Wdowiec</option>
+                </select>
+                <? if ($this->validation->failed("relationship")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("relationship")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Numer telefonu</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xl-8 text-light input-icons">
+                <input name="phoneNumber" class="form-control border border-dark">
+                <? if ($this->validation->failed("phoneNumber")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("phoneNumber")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-light">
+                <label>Miejsce zamieszkania</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xl-8 text-light input-icons">
+                <input name="place" class="form-control border border-dark">
+                <? if ($this->validation->failed("place")): ?>
+                    <span class="error">
+                        <?= htmlSpecialChars($this->validation->message("place")); ?>
+                    </span>
+                <? endif; ?>
+            </div>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <button type="submit" class="btn btn-primary mb-3" name="submitSettings">Zapisz zmiany</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="js./bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

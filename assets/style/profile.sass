@@ -1,0 +1,200 @@
+$black-color: black
+$white-color:white
+$width:120px
+
+@mixin userData
+  padding: 10px
+
+@mixin reactionPost
+  background-color: #87CEFA
+  border: none
+  outline: none
+  padding: 5px
+
+@mixin fontPostReaction
+  font-weight: bold
+  padding-left: 15px
+  color: $white-color
+
+@mixin textCenter
+  text-align: center
+
+@mixin userStatus
+  padding: 10px
+  color: $white-color
+  min-width: $width
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+  #menu
+    background-color: $black-color
+    color: #5CDB95
+
+  #panelMenu
+    cursor: pointer
+
+  .bg-mat:hover
+    background-color: $white-color
+    border-radius: 5px
+    color: $black-color
+
+  .text-mat:hover
+    color: $black-color
+
+  li a
+    color: $white-color
+    &:hover
+      color: $black-color
+
+  .nav-link
+    font-size: 20px
+
+  #userBoard
+    padding-top: 80px
+    padding-bottom: 80px
+    color: $black-color
+    font-weight: bold
+
+  #rowBirthDate
+    @include userData
+
+  #rowEmail
+    @include userData
+
+  #rowSchool
+    @include userData
+
+  #rowNumberPhone
+    @include userData
+
+  #rowGender
+    @include userData
+
+  #rowMartialStatus
+    @include userData
+
+  #rowWork
+    @include userData
+
+  #rowPlaceLiving
+    @include userData
+
+  #avatar img
+    height: 200px
+    width: 200px
+    border: 5px solid $black-color
+
+  #userName
+    font-size: 30px
+    margin-top: 50px
+
+  #friendStatus
+    border: none
+    outline: none
+    padding: 10px
+    font-weight: bold
+    background-color: $black-color
+    color: $white-color
+    margin-top: 20px
+    min-width: $width
+
+  #friendsButton
+    background-color: $black-color
+    padding: 10px
+    text-decoration: none
+    color: $white-color
+    min-width: $width
+
+  #photoViewButton
+    background-color: $black-color
+    padding: 15px
+    text-decoration: none
+    color: $white-color
+    min-width: $width
+
+  #colFriends
+    @include textCenter
+
+  #colPhotoView
+    @include textCenter
+
+  #colConversation
+    @include textCenter
+
+  #colStatus
+    @include textCenter
+
+  #conversationButton
+    background-color: $black-color
+    padding: 10px
+    text-decoration: none
+    color: $white-color
+    min-width: $width
+
+  #onlineStatus
+    @include userStatus
+
+  #offlineStatus
+    @include userStatus
+
+  main
+    background-color: $black-color
+    padding-top: $width
+
+  #postModule
+    min-height: 800px
+
+  h1
+   text-align: center
+   color: $white-color
+
+  .buttonPostPublish
+    float: right
+
+  .authorPost
+    color: $white-color
+    font-weight: bold
+    margin: 0
+    padding-left: 15px
+
+  .timePostPublish
+    color: $white-color
+    font-weight: bold
+    padding-right: 15px
+
+  #post
+    margin-top: 20px
+    font-size: 18px
+    background-color: $white-color
+
+  #dataPost
+    background-color: $black-color
+    padding: 10px
+
+  #containerPost
+    background-color: $white-color
+    color: $black-color
+
+  .contentPost
+    padding: 12px
+
+  .likeButton
+    @include reactionPost
+
+  .dislikeButton
+    @include reactionPost
+
+  #likeFont
+    @include fontPostReaction
+
+  #dislikeFont
+    @include fontPostReaction
+
+  #colPostReaction i
+    font-size: 25px
+    color: $white-color
+
+
+

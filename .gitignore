@@ -1,0 +1,8 @@
+# Project
+.idea/
+
+# Credentials
+connection.txt
+
+# Style maps
+*.css.map

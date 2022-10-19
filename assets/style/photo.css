@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+* body {
+  width: 100vw;
+  height: calc(100vh - 62px);
+  background: linear-gradient(90deg, #343a40 0%, #343a40 100%);
+}
+* #menu {
+  background-color: black;
+  color: #5CDB95;
+}
+* .nav-link {
+  font-size: 20px;
+}
+* li a {
+  color: white;
+}
+* li a:hover {
+  color: black;
+}
+* .bg-mat:hover {
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+}
+* #panelMenu {
+  cursor: pointer;
+}
+* .container {
+  padding-top: 100px;
+  background-color: #5CDB95;
+}
+* #photo {
+  width: 300px;
+  height: 300px;
+  display: inline-block;
+  margin-bottom: 80px;
+}
+* img {
+  width: 100%;
+  height: 100%;
+  border: 3px solid white;
+}
+* .likePhotoReaction {
+  background-color: #87CEFA;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+* .dislikePhotoReaction {
+  background-color: #87CEFA;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+* .fa-heart {
+  padding: 10px;
+  color: white;
+}
+* .fa-heart-broken {
+  padding: 10px;
+  color: white;
+}
+* #likeFont {
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+* #dislikeFont {
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=photo.css.map */
