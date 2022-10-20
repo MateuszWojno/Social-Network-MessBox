@@ -31,7 +31,7 @@ class Settings
                                 private RelationshipUpdateRepository $relationship,
                                 private PhoneNumberRepository        $phoneNumber,
                                 private PlaceUpdateRepository        $place,
-                                private                              $photoUploadDate)
+                                private string                       $photoUploadDate)
     {
     }
 

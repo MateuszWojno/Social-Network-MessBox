@@ -23,45 +23,34 @@ use Mess\View\Views\ValidationErrors;
 
 $session = new Session();
 
-$string = new ConnectionString(new CredentialsFile("connection.txt"));
 
 if ($session->userLoggedIn()) {
-    function getView(SettingsRequest              $request,
-                     Session                      $session,
-                     PhotoRepository              $photoRepository,
-                     AvatarUpdateRepository       $avatarUpdate,
-                     LastNameUpdateRepository     $lastNameUpdate,
-                     WorkUpdateRepository         $workUpdate,
-                     SchoolUpdateRepository       $schoolUpdate,
-                     RelationshipUpdateRepository $relationshipUpdate,
-                     PhoneNumberRepository        $phoneNumberRepository,
-                     PlaceUpdateRepository        $placeUpdate): View
+    function getView(SettingsRequest $request, Session $session): View
     {
-        $photoUploadDate = date('Y-m-d');
+        $string = new ConnectionString(new CredentialsFile("connection.txt"));
+        $photoAddDate = date('Y-m-d');
 
         if (!$request->wantsSubmitSettings()) {
             return new SettingsView($session->userId(), Validation::success());
         }
-        $settings = new Settings($photoRepository, $avatarUpdate, $lastNameUpdate, $workUpdate, $schoolUpdate, $relationshipUpdate, $phoneNumberRepository, $placeUpdate, $photoUploadDate);
-        $operations = $settings->operations($request, $session);
+        $settings = new Settings(new PhotoRepository($string->getPdo()),
+            new AvatarUpdateRepository($string->getPdo()),
+            new LastNameUpdateRepository($string->getPdo()),
+            new WorkUpdateRepository($string->getPdo()),
+            new SchoolUpdateRepository($string->getPdo()),
+            new RelationshipUpdateRepository($string->getPdo()),
+            new PhoneNumberRepository($string->getPdo()),
+            new PlaceUpdateRepository($string->getPdo()),
+            $photoAddDate);
 
         $errors = new ValidationErrors();
-        foreach ($operations as $operation) {
+        foreach ($settings->operations($request, $session) as $operation) {
             $operation->apply($errors);
         }
         return new SettingsView($session->userId(), $errors->validation());
     }
 
-    $view = getView(new SettingsRequest($_POST),
-        $session,
-        new PhotoRepository($string->getPdo()),
-        new AvatarUpdateRepository($string->getPdo()),
-        new LastNameUpdateRepository($string->getPdo()),
-        new WorkUpdateRepository($string->getPdo()),
-        new SchoolUpdateRepository($string->getPdo()),
-        new RelationshipUpdateRepository($string->getPdo()),
-        new PhoneNumberRepository($string->getPdo()),
-        new PlaceUpdateRepository($string->getPdo()));
+    $view = getView(new SettingsRequest($_POST), $session);
     $view->render();
 } else {
     $header = Header::homepage();
