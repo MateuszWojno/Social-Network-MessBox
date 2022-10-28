@@ -1,4 +1,5 @@
 <?php
+
 namespace Mess\Application;
 
 use Mess\Application\Operation\UpdateAvatarOperation;
@@ -37,30 +38,35 @@ class Settings
 
     public function operations(SettingsRequest $request, Session $session): array
     {
+        return $this->userOperations($request, $session->userId());
+    }
+
+    private function userOperations(SettingsRequest $request, int $userId): array
+    {
         $operations = [];
         if ($request->wantsSubmitPhoto()) {
-            $operations[] = new UpdatePhotoOperation($this->photo, $session->userId(), $request->photo(), $this->photoUploadDate);
+            $operations[] = new UpdatePhotoOperation($this->photo, $userId, $request->photo(), $this->photoUploadDate);
         }
         if ($request->wantsSubmitAvatar()) {
-            $operations[] = new UpdateAvatarOperation($this->avatar, $session->userId(), $request->avatar());
+            $operations[] = new UpdateAvatarOperation($this->avatar, $userId, $request->avatar());
         }
         if ($request->wantsSubmitLastName()) {
-            $operations[] = new UpdateLastNameOperation($this->lastName, $session->userId(), $request->lastName());
+            $operations[] = new UpdateLastNameOperation($this->lastName, $userId, $request->lastName());
         }
         if ($request->wantsSubmitWork()) {
-            $operations[] = new UpdateWorkOperation($this->work, $session->userId(), $request->work());
+            $operations[] = new UpdateWorkOperation($this->work, $userId, $request->work());
         }
         if ($request->wantsSubmitSchool()) {
-            $operations[] = new UpdateSchoolOperation($this->school, $session->userId(), $request->school());
+            $operations[] = new UpdateSchoolOperation($this->school, $userId, $request->school());
         }
         if ($request->wantsSubmitRelationship()) {
-            $operations[] = new UpdateRelationship($this->relationship, $session->userId(), $request->relationship());
+            $operations[] = new UpdateRelationship($this->relationship, $userId, $request->relationship());
         }
         if ($request->wantsSubmitPhoneNumber()) {
-            $operations[] = new UpdatePhoneNumberOperation($this->phoneNumber, $session->userId(), $request->phoneNumber());
+            $operations[] = new UpdatePhoneNumberOperation($this->phoneNumber, $userId, $request->phoneNumber());
         }
         if ($request->wantsSubmitPlace()) {
-            $operations[] = new UpdatePlaceOperation($this->place, $session->userId(), $request->place());
+            $operations[] = new UpdatePlaceOperation($this->place, $userId, $request->place());
         }
 
         return $operations;
