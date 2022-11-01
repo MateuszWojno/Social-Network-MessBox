@@ -30,7 +30,7 @@
                 <a class="nav-link" href="index.php">Startowa</a>
             </li>
             <li class="nav-item bg-mat">
-                <a class="nav-link" href="logging.php">Logowanie</a>
+                <a class="nav-link" href="login.php">Logowanie</a>
             </li>
             <li class="nav-item bg-mat">
                 <a class="nav-link" href="registration.php">Rejestracja</a>

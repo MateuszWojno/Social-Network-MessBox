@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto col-xl-7 bg-f2 d-flex justify-content-between">
             <li class="nav-item bg-mat"><a class="nav-link" href="index.php">Startowa</a></li>
-            <li class="nav-item bg-mat"><a class="nav-link" href="logging.php">Logowanie</a></li>
+            <li class="nav-item bg-mat"><a class="nav-link" href="login.php">Logowanie</a></li>
             <li class="nav-item bg-mat"><a class="nav-link" href="registration.php">Rejestracja</a></li>
         </ul>
     </div>

@@ -31,7 +31,7 @@
                 <a class="nav-link" href="index.php">Startowa</a>
             </li>
             <li class="nav-item bg-mat">
-                <a class="nav-link" href="logging.php">Logowanie</a>
+                <a class="nav-link" href="login.php">Logowanie</a>
             </li>
             <li class="nav-item bg-mat">
                 <a class="nav-link" href="registration.php">Rejestracja</a>
@@ -46,7 +46,7 @@
             <h1>Logowanie</h1>
         </div>
     </div>
-    <form action="logging.php" method="post">
+    <form action="login.php" method="post">
         <div class="row">
             <div class="form-group col-xl-12 text-light input-icons">
                 <input name="login" class="form-control border border-dark" placeholder="Login...">
