@@ -38,7 +38,10 @@ class Settings
 
     public function operations(SettingsRequest $request, Session $session): array
     {
-        return $this->userOperations($request, $session->userId());
+        if ($request->wantsSubmitSettings()) {
+            return $this->userOperations($request, $session->userId());
+        }
+        return [];
     }
 
     private function userOperations(SettingsRequest $request, int $userId): array

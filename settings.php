@@ -16,7 +16,6 @@ use Mess\Persistence\Database\User\RelationshipUpdateRepository;
 use Mess\Persistence\Database\User\SchoolUpdateRepository;
 use Mess\Persistence\Database\User\WorkUpdateRepository;
 use Mess\Persistence\Session\Session;
-use Mess\View\Validation;
 use Mess\View\View;
 use Mess\View\Views\SettingsView;
 use Mess\View\Views\ValidationErrors;
@@ -27,10 +26,6 @@ $string = new ConnectionString(new CredentialsFile("connection.txt"));
 if ($session->userLoggedIn()) {
     function getView(SettingsRequest $request, Session $session, Settings $settings): View
     {
-        if (!$request->wantsSubmitSettings()) {
-            return new SettingsView($session->userId(), Validation::success());
-        }
-
         $errors = new ValidationErrors();
         foreach ($settings->operations($request, $session) as $operation) {
             $operation->apply($errors);
