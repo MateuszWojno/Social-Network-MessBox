@@ -90,31 +90,31 @@
             <tbody>
             <tr>
                 <th scope="col">Ilość znajomych</th>
-                <td scope="col"><span> <?= htmlEntities($this->countFriend); ?></span></td>
+                <td scope="col"><span> <?= $this->statistics->amountFriends; ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość postów</th>
-                <td scope="col"><span> <?= htmlEntities($this->countPost); ?></span></td>
+                <td scope="col"><span> <?= $this->statistics->amountPosts; ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość zdjęć</th>
-                <td><span> <?= htmlEntities($this->countPhoto); ?></span></td>
+                <td><span> <?= $this->statistics->amountPhotos ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość polubionych postów</th>
-                <td><span> <?= htmlEntities($this->countPostLike); ?></span></td>
+                <td><span> <?= $this->statistics->amountPostsLike; ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość nielubianych postów</th>
-                <td><span><?= htmlEntities($this->countPostDislike); ?></span></td>
+                <td><span><?= $this->statistics->amountPostsDislike; ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość polubionych zdjęć</th>
-                <td><span> <?= htmlEntities($this->countPhotoDislike); ?></span></td>
+                <td><span> <?= $this->statistics->amountPhotosLike; ?></span></td>
             </tr>
             <tr>
                 <th scope="row">Ilość nielubianych zdjęć</th>
-                <td><span><?= htmlEntities($this->countPhotoLike); ?></span></td>
+                <td><span><?= $this->statistics->amountPhotosDislike; ?></span></td>
             </tr>
         </table>
     </div>

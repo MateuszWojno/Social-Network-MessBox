@@ -3,6 +3,7 @@
 require_once 'src/autoload.php';
 
 use Mess\Application\Profile;
+use Mess\Application\Statistics;
 use Mess\Http\Header;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
@@ -15,25 +16,13 @@ $session = new Session();
 $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
 if ($session->userLoggedIn()) {
-    $userStatistics = new UserStatisticsRepository($string->getPdo());
-
-    $countFriend = $userStatistics->CountFriend($session->userId());
-    $countPost = $userStatistics->CountPost($session->userId());
-    $countPhoto = $userStatistics->CountPhoto($session->userId());
-    $countPostLike = $userStatistics->CountPostLike($session->userId(), 'like');
-    $countPostDislike = $userStatistics->CountPostDislike($session->userId(), 'dislike');
-    $countPhotoDislike = $userStatistics->CountPhotoDislike($session->userId(), 'dislike');
-    $countPhotoLike = $userStatistics->CountPhotoLike($session->userId(), 'like');
+    $statisticsRepository = new UserStatisticsRepository($string->getPdo());
+    $statistics = new Statistics($statisticsRepository);
+    $userStatistics = $statistics->userStatistics($session->userId());
 
     $view = new View('src/mess/view/pages/statistics.php', [
-        'profile'           => new Profile($session->userId()),
-        'countFriend'       => $countFriend,
-        'countPost'         => $countPost,
-        'countPhoto'        => $countPhoto,
-        'countPostLike'     => $countPostLike,
-        'countPostDislike'  => $countPostDislike,
-        'countPhotoDislike' => $countPhotoDislike,
-        'countPhotoLike'    => $countPhotoLike,
+        'profile'    => new Profile($session->userId()),
+        'statistics' => $userStatistics,
     ]);
     $view->render();
 } else {
