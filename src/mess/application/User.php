@@ -1,4 +1,5 @@
 <?php
+
 namespace Mess\Application;
 
 class User
@@ -11,8 +12,8 @@ class User
         public string $birthDate,
         public string $gender,
         public string $email,
-        public string $work,
         public string $school,
+        public string $work,
         public string $placeLiving,
         public string $martialStatus,
         public string $numberPhone,
