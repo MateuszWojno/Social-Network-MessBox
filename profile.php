@@ -10,6 +10,7 @@ use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\Friend\FriendRepository;
 use Mess\Persistence\Database\PostReaction\PostReactionRepository;
 use Mess\Persistence\Database\PostReaction\PostRepository;
+use Mess\Persistence\Database\User\FriendStatusRepository;
 use Mess\Persistence\Database\User\UserReadRepository;
 use Mess\Persistence\Session\Session;
 use Mess\View\Result;
@@ -21,11 +22,17 @@ $session = new Session();
 if ($session->userLoggedIn()) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
-    function getView(PDO $pdo, ProfileRequest $request, UserReadRepository $userRead, PostRepository $postRepository, UserIdRequest $id, FriendRepository $friendRepository, Session $session): View
+    function getView(ProfileRequest                                 $request,
+                     UserReadRepository                             $userRead,
+                     PostRepository                                 $postRepository,
+                     UserIdRequest                                  $id,
+                     FriendRepository                               $friendRepository,
+                     Session                                        $session,
+                     PostReactionRepository                         $reactionRepo,
+                     FriendStatusRepository                         $statusRepo,
+                     \Mess\Persistence\Database\Post\PostRepository $addingPost): View
     {
         $userId = $session->userId();
-        $reactionRepo = new PostReactionRepository($pdo);
-        $statusRepo = new Mess\Persistence\Database\User\FriendStatusRepository($pdo);
         $user = $userRead->fetchUser($id->getUserId());
         $posts = $postRepository->fetchPosts($id->getUserId(), $userId);
         $status = $statusRepo->friendStatus($id->getUserId(), $session->userId());
@@ -41,8 +48,7 @@ if ($session->userLoggedIn()) {
             if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $request->post())) {
                 return new ProfileView($userId, $user, Result::failure('Niedozwolone znaki, lub za długi tekst'), $posts, $status);
             }
-            $addPost = new Mess\Persistence\Database\Post\PostRepository($pdo);
-            $addPost->addPost($userId, $request->post(), date("Y-m-d-H:i:s"));
+            $addingPost->addPost($userId, $request->post(), date("Y-m-d-H:i:s"));
         }
 
         if ($request->wantsSubmitLike()) {
@@ -56,7 +62,14 @@ if ($session->userLoggedIn()) {
         return new ProfileView($userId, $user, Result::success(), $posts, $status);
     }
 
-    $view = getView($string->getPdo(), new ProfileRequest($_POST), new UserReadRepository($string->getPdo()), new PostRepository($string->getPdo()), new UserIdRequest($_GET), new FriendRepository($string->getPdo()), $session);
+    $view = getView(new ProfileRequest($_POST),
+        new UserReadRepository($string->getPdo()),
+        new PostRepository($string->getPdo()),
+        new UserIdRequest($_GET),
+        new FriendRepository($string->getPdo()), $session,
+        new PostReactionRepository($string->getPdo()),
+        new FriendStatusRepository($string->getPdo()),
+        new \Mess\Persistence\Database\Post\PostRepository($string->getPdo()));
     $view->render();
 } else {
     $header = Header::homepage();
