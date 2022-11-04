@@ -10,7 +10,7 @@ class UserIdRequest
         $this->getAttributes = $getAttributes;
     }
 
-    public function getUserId(): int
+    public function userId(): int
     {
         return $this->getAttributes['id'];
     }

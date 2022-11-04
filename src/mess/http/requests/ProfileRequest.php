@@ -49,7 +49,7 @@ class ProfileRequest
 
     public function userId(): int
     {
-        return $this->request->getUserId();
+        return $this->request->userId();
     }
 
 }

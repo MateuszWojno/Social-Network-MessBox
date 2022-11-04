@@ -27,8 +27,8 @@ if ($session->userLoggedIn()) {
 
         return new FriendsView(
             $session->userId(),
-            $friendRepository->getFriends($id->getUserId(), $session->userId()),
-            $friendStatus->areFriends($session->userId(), $id->getUserId())
+            $friendRepository->getFriends($id->userId(), $session->userId()),
+            $friendStatus->areFriends($session->userId(), $id->userId())
         );
     }
 

@@ -27,7 +27,7 @@ if ($session->userLoggedIn()) {
         } else if ($photoRequest->isSubmitDislike()) {
             $reaction->addReactionIfMissing($photoRequest->dislike(), $session->userId(), 'dislike');
         }
-        return new PhotoView($session->userId(), $photoRepository->getPhotos($id->getUserId(), $session->userId()));
+        return new PhotoView($session->userId(), $photoRepository->getPhotos($id->userId(), $session->userId()));
     }
 
     $view = getView($string->getPdo(), $session, new PhotoRequest($_POST), new PhotoRepository($string->getPdo()), new UserIdRequest($_GET));

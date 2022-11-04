@@ -29,7 +29,7 @@ if ($session->userLoggedIn()) {
         if ($request->wantsNegative()) {
             $requestRepo->responseNegative($userId, $request->negative());
         }
-        return new NotificationView($userId, $invitation->getInvitations($id->getUserId()));
+        return new NotificationView($userId, $invitation->getInvitations($id->userId()));
     }
 
     $view = getView(new NotificationRequest($_POST), new UserIdRequest($_GET), new FriendRequestRepository($string->getPdo()), new InvitationRepository($string->getPdo()), $session);

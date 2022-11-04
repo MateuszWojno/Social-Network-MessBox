@@ -21,7 +21,7 @@ if ($session->userLoggedIn()) {
 
     function getView(ConversationRequest $conversationRequest, UserIdRequest $id, MessageReactionRepository $messageReaction, MessageRepository $messageRepository, Session $session): View
     {
-        $messages = $messageRepository->messages($session->userId(), $id->getUserId());
+        $messages = $messageRepository->messages($session->userId(), $id->userId());
         if (!$conversationRequest->wantsSubmit()) {
             return new ConversationView($session->userId(), $messages, Result::success());
         }
@@ -31,7 +31,7 @@ if ($session->userLoggedIn()) {
         if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $conversationRequest->Message())) {
             return new ConversationView($session->userId(), $messages, Result::failure('Niedozwolone znaki, lub za długi tekst'));
         }
-        $messageReaction->addMessage($session->userId(), $id->getUserId(), $conversationRequest->message());
+        $messageReaction->addMessage($session->userId(), $id->userId(), $conversationRequest->message());
         return new ConversationView($session->userId(), $messages, Result::success());
     }
 
