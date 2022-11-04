@@ -13,7 +13,7 @@ use Mess\Persistence\Database\PostReaction\PostRepository;
 use Mess\Persistence\Database\User\FriendStatusRepository;
 use Mess\Persistence\Database\User\UserReadRepository;
 use Mess\Persistence\Session\Session;
-use Mess\View\Result;
+use Mess\View\Validation;
 use Mess\View\View;
 use Mess\View\Views\ProfileView;
 
@@ -42,10 +42,10 @@ if ($session->userLoggedIn()) {
 
         if ($request->wantsSubmitPost()) {
             if ($request->post() === '') {
-                return new ProfileView($userId, $user, Result::failure('Puste pole'), $posts, $status);
+                return new ProfileView($userId, $user, Validation::failure('post','Puste pole'), $posts, $status);
             }
             if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $request->post())) {
-                return new ProfileView($userId, $user, Result::failure('Niedozwolone znaki, lub za długi tekst'), $posts, $status);
+                return new ProfileView($userId, $user, Validation::failure('post','Niedozwolone znaki, lub za długi tekst'), $posts, $status);
             }
             $addingPost->addPost($userId, $request->post(), date("Y-m-d-H:i:s"));
         }
@@ -58,7 +58,7 @@ if ($session->userLoggedIn()) {
             $reactionRepo->addReactionIfMissing($postId, $userId, 'dislike');
         }
 
-        return new ProfileView($userId, $user, Result::success(), $posts, $status);
+        return new ProfileView($userId, $user, Validation::success(), $posts, $status);
     }
 
     $view = getView(new ProfileRequest($_POST, new UserIdRequest($_GET)),

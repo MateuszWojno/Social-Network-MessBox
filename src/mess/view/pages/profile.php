@@ -199,9 +199,9 @@
                                   placeholder="Co słychać?"
                                   name="post">
                         </textarea>
-                        <?php if ($this->message->failed()): ?>
+                        <?php if ($this->validation->failed('post')): ?>
                             <span class="error" style="color: red">
-                                <?= htmlSpecialChars($this->message->errorMessage()); ?>
+                                <?= htmlSpecialChars($this->validation->message('post')); ?>
                             </span>
                         <?php endif; ?>
                         <div class="buttonPostPublish">
