@@ -38,24 +38,26 @@ if ($session->userLoggedIn()) {
 
         if ($request->wantsAddFriend()) {
             $friendRepository->addPendingStatusIfMissing($userId, $request->userId());
+            return new ProfileView($userId, $user, Validation::success(), $posts, $status);
         }
-
         if ($request->wantsSubmitPost()) {
             if ($request->post() === '') {
-                return new ProfileView($userId, $user, Validation::failure('post','Puste pole'), $posts, $status);
+                return new ProfileView($userId, $user, Validation::failure('post', 'Puste pole'), $posts, $status);
             }
             if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $request->post())) {
-                return new ProfileView($userId, $user, Validation::failure('post','Niedozwolone znaki, lub za długi tekst'), $posts, $status);
+                return new ProfileView($userId, $user, Validation::failure('post', 'Niedozwolone znaki, lub za długi tekst'), $posts, $status);
             }
             $addingPost->addPost($userId, $request->post(), date("Y-m-d-H:i:s"));
+            return new ProfileView($userId, $user, Validation::success(), $posts, $status);
         }
 
         if ($request->wantsSubmitLike()) {
-            $postId = $request->postIdLike();
-            $reactionRepo->addReactionIfMissing($postId, $userId, 'like');
-        } else if ($request->wantsSubmitDislike()) {
-            $postId = $request->postIdDislike();
-            $reactionRepo->addReactionIfMissing($postId, $userId, 'dislike');
+            $reactionRepo->addReactionIfMissing($request->postIdLike(), $userId, 'like');
+            return new ProfileView($userId, $user, Validation::success(), $posts, $status);
+        }
+        if ($request->wantsSubmitDislike()) {
+            $reactionRepo->addReactionIfMissing($request->postIdDislike(), $userId, 'dislike');
+            return new ProfileView($userId, $user, Validation::success(), $posts, $status);
         }
 
         return new ProfileView($userId, $user, Validation::success(), $posts, $status);
