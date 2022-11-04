@@ -25,7 +25,6 @@ if ($session->userLoggedIn()) {
     function getView(ProfileRequest                                 $request,
                      UserReadRepository                             $userRead,
                      PostRepository                                 $postRepository,
-                     UserIdRequest                                  $id,
                      FriendRepository                               $friendRepository,
                      Session                                        $session,
                      PostReactionRepository                         $reactionRepo,
@@ -33,12 +32,12 @@ if ($session->userLoggedIn()) {
                      \Mess\Persistence\Database\Post\PostRepository $addingPost): View
     {
         $userId = $session->userId();
-        $user = $userRead->fetchUser($id->getUserId());
-        $posts = $postRepository->fetchPosts($id->getUserId(), $userId);
-        $status = $statusRepo->friendStatus($id->getUserId(), $session->userId());
+        $user = $userRead->fetchUser($request->userId());
+        $posts = $postRepository->fetchPosts($request->userId(), $userId);
+        $status = $statusRepo->friendStatus($request->userId(), $session->userId());
 
         if ($request->wantsAddFriend()) {
-            $friendRepository->addPendingStatusIfMissing($userId, $id->getUserId());
+            $friendRepository->addPendingStatusIfMissing($userId, $request->userId());
         }
 
         if ($request->wantsSubmitPost()) {
@@ -62,10 +61,9 @@ if ($session->userLoggedIn()) {
         return new ProfileView($userId, $user, Result::success(), $posts, $status);
     }
 
-    $view = getView(new ProfileRequest($_POST),
+    $view = getView(new ProfileRequest($_POST, new UserIdRequest($_GET)),
         new UserReadRepository($string->getPdo()),
         new PostRepository($string->getPdo()),
-        new UserIdRequest($_GET),
         new FriendRepository($string->getPdo()), $session,
         new PostReactionRepository($string->getPdo()),
         new FriendStatusRepository($string->getPdo()),

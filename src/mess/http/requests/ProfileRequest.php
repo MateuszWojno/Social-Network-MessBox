@@ -4,10 +4,12 @@ namespace Mess\Http\Requests;
 class ProfileRequest
 {
     private array $postAttributes;
+    private UserIdRequest $request;
 
-    public function __construct(array $postAttributes)
+    public function __construct(array $postAttributes, UserIdRequest $request)
     {
         $this->postAttributes = $postAttributes;
+        $this->request = $request;
     }
 
     public function post(): string
@@ -43,6 +45,11 @@ class ProfileRequest
     public function wantsAddFriend(): bool
     {
         return isset($this->postAttributes['addFriend']);
+    }
+
+    public function userId(): int
+    {
+        return $this->request->getUserId();
     }
 
 }
