@@ -1,7 +1,7 @@
 <?php
 namespace Mess\View\Views;
 
-use Mess\Application\Profile;
+use Mess\Application\ViewProfile;
 use Mess\View\View;
 
 class NotificationView extends View
@@ -9,7 +9,7 @@ class NotificationView extends View
     public function __construct(int $userId, array $invitations)
     {
         parent::__construct('src/mess/view/pages/notification.php', [
-            'profile'     => new Profile($userId),
+            'profile'     => new ViewProfile($userId),
             'invitations' => $invitations,
         ]);
     }

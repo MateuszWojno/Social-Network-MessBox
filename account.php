@@ -2,7 +2,7 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Application\Profile;
+use Mess\Application\ViewProfile;
 use Mess\Http\Header;
 use Mess\Http\Requests\AccountRequest;
 use Mess\Persistence\ConnectionString;
@@ -26,7 +26,7 @@ if ($session->userLoggedIn()) {
     }
 
     $view = new View('src/mess/view/pages/account.php', [
-        'profile' => new Profile($userId),
+        'profile' => new ViewProfile($userId),
     ]);
     $view->render();
 } else {

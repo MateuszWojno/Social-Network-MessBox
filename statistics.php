@@ -2,7 +2,7 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Application\Profile;
+use Mess\Application\ViewProfile;
 use Mess\Application\Statistics;
 use Mess\Http\Header;
 use Mess\Persistence\ConnectionString;
@@ -21,7 +21,7 @@ if ($session->userLoggedIn()) {
     $userStatistics = $statistics->userStatistics($session->userId());
 
     $view = new View('src/mess/view/pages/statistics.php', [
-        'profile'    => new Profile($session->userId()),
+        'profile'    => new ViewProfile($session->userId()),
         'statistics' => $userStatistics,
     ]);
     $view->render();

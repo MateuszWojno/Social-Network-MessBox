@@ -2,7 +2,7 @@
 
 namespace Mess\Application;
 
-class Profile
+class ViewProfile
 {
 
     public function __construct(private $userId)
