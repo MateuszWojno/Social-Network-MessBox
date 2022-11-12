@@ -133,6 +133,10 @@
 * .buttonPostPublish {
   float: right;
 }
+* .formPost {
+  border: none;
+  outline: none;
+}
 * .authorPost {
   color: white;
   font-weight: bold;

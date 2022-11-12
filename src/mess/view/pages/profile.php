@@ -194,11 +194,7 @@
             <div class="row d-flex justify-content-center" style="display: block">
                 <div class="col-xl-7">
                     <form method="post" name="formPostPublish">
-                        <textarea class="md-textarea form-control"
-                                  rows="5"
-                                  placeholder="Co słychać?"
-                                  name="post">
-                        </textarea>
+                        <textarea name="post" class="col-xl-12 formPost" rows="5" placeholder="Co słychać?"></textarea>
                         <?php if ($this->validation->failed('post')): ?>
                             <span class="error" style="color: red">
                                 <?= htmlSpecialChars($this->validation->message('post')); ?>
