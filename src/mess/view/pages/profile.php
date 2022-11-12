@@ -242,7 +242,7 @@
                                         name="submitDislike">
                                     <i class="fas fa-heart-broken"></i>
                                     <input type="hidden" name="dislike"
-                                           value="<?= htmlSpecialChars($post->post_id); ?>"/>
+                                           value="<?= htmlSpecialChars($post->postId); ?>"/>
                                     <span id="dislikeFont"><?= htmlSpecialChars($post->dislike); ?></span>
                                 </button>
                             </div>
