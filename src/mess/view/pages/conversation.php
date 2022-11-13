@@ -95,9 +95,9 @@
             <div class="col-xl-12" id="sending">
                 <form action="" method="post">
                     <textarea name="message" class="col-xl-12"></textarea>
-                    <?php if ($this->message->failed()): ?>
+                    <?php if ($this->validation->failed('message')): ?>
                         <span class="error">
-                            <?= htmlSpecialChars($this->message->errorMessage()); ?>
+                            <?= htmlSpecialChars($this->validation->message('message')); ?>
                         </span>
                     <?php endif; ?>
                     <button id="sendButton" name="submitMessage">Wyślij</button>

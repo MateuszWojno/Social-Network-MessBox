@@ -10,7 +10,7 @@ use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\Message\MessageReactionRepository;
 use Mess\Persistence\Database\Message\MessageRepository;
 use Mess\Persistence\Session\Session;
-use Mess\View\Result;
+use Mess\View\Validation;
 use Mess\View\View;
 use Mess\View\Views\ConversationView;
 
@@ -26,16 +26,16 @@ if ($session->userLoggedIn()) {
     {
         $messages = $messageRepository->messages($session->userId(), $conversationRequest->userId());
         if (!$conversationRequest->wantsSubmit()) {
-            return new ConversationView($session->userId(), $messages, Result::success());
+            return new ConversationView($session->userId(), $messages, Validation::success());
         }
         if ($conversationRequest->message() === '') {
-            return new ConversationView($session->userId(), $messages, Result::failure('Puste pole'));
+            return new ConversationView($session->userId(), $messages, Validation::failure('message', 'Puste pole'));
         }
         if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $conversationRequest->Message())) {
-            return new ConversationView($session->userId(), $messages, Result::failure('Niedozwolone znaki, lub za długi tekst'));
+            return new ConversationView($session->userId(), $messages, Validation::failure('message', 'Niedozwolone znaki, lub za długi tekst'));
         }
         $messageReaction->addMessage($session->userId(), $conversationRequest->userId(), $conversationRequest->message());
-        return new ConversationView($session->userId(), $messages, Result::success());
+        return new ConversationView($session->userId(), $messages, Validation::success());
     }
 
     $view = getView(new ConversationRequest($_POST, new UserIdRequest($_GET)),
