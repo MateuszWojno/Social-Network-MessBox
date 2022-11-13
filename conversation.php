@@ -19,9 +19,12 @@ $session = new Session();
 if ($session->userLoggedIn()) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
-    function getView(ConversationRequest $conversationRequest, UserIdRequest $id, MessageReactionRepository $messageReaction, MessageRepository $messageRepository, Session $session): View
+    function getView(ConversationRequest       $conversationRequest,
+                     MessageReactionRepository $messageReaction,
+                     MessageRepository         $messageRepository,
+                     Session                   $session): View
     {
-        $messages = $messageRepository->messages($session->userId(), $id->userId());
+        $messages = $messageRepository->messages($session->userId(), $conversationRequest->userId());
         if (!$conversationRequest->wantsSubmit()) {
             return new ConversationView($session->userId(), $messages, Result::success());
         }
@@ -31,11 +34,14 @@ if ($session->userLoggedIn()) {
         if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $conversationRequest->Message())) {
             return new ConversationView($session->userId(), $messages, Result::failure('Niedozwolone znaki, lub za długi tekst'));
         }
-        $messageReaction->addMessage($session->userId(), $id->userId(), $conversationRequest->message());
+        $messageReaction->addMessage($session->userId(), $conversationRequest->userId(), $conversationRequest->message());
         return new ConversationView($session->userId(), $messages, Result::success());
     }
 
-    $view = getView(new ConversationRequest($_POST), new UserIdRequest($_GET), new MessageReactionRepository($string->getPdo()), new MessageRepository($string->getPdo()), $session);
+    $view = getView(new ConversationRequest($_POST, new UserIdRequest($_GET)),
+        new MessageReactionRepository($string->getPdo()),
+        new MessageRepository($string->getPdo()),
+        $session);
     $view->render();
 } else {
     $header = Header::homepage();
