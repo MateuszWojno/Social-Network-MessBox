@@ -24,18 +24,16 @@ if ($session->userLoggedIn()) {
                      MessageRepository         $messageRepository,
                      Session                   $session): View
     {
-        $messages = $messageRepository->messages($session->userId(), $conversationRequest->userId());
-        if (!$conversationRequest->wantsSubmit()) {
-            return new ConversationView($session->userId(), $messages, Validation::success());
+        if ($conversationRequest->wantsSubmit()) {
+            if ($conversationRequest->message() === '') {
+                return new ConversationView($session->userId(), $messageRepository->messages($session->userId(), $conversationRequest->userId()), Validation::failure('message', 'Puste pole'));
+            }
+            if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $conversationRequest->Message())) {
+                return new ConversationView($session->userId(), $messageRepository->messages($session->userId(), $conversationRequest->userId()), Validation::failure('message', 'Niedozwolone znaki, lub za długi tekst'));
+            }
+            $messageReaction->addMessage($session->userId(), $conversationRequest->userId(), $conversationRequest->message());
         }
-        if ($conversationRequest->message() === '') {
-            return new ConversationView($session->userId(), $messages, Validation::failure('message', 'Puste pole'));
-        }
-        if (!preg_match('/^[a-zA-Z-0-9ąćęłńóśźż?,._\-\s]{1,400}$/', $conversationRequest->Message())) {
-            return new ConversationView($session->userId(), $messages, Validation::failure('message', 'Niedozwolone znaki, lub za długi tekst'));
-        }
-        $messageReaction->addMessage($session->userId(), $conversationRequest->userId(), $conversationRequest->message());
-        return new ConversationView($session->userId(), $messages, Validation::success());
+        return new ConversationView($session->userId(), $messageRepository->messages($session->userId(), $conversationRequest->userId()), Validation::success());
     }
 
     $view = getView(new ConversationRequest($_POST, new UserIdRequest($_GET)),
