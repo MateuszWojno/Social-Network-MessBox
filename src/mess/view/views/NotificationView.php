@@ -8,7 +8,7 @@ class NotificationView extends View
 {
     public function __construct(int $userId, array $invitations)
     {
-        parent::__construct('src/mess/view/pages/notification.php', [
+        parent::__construct('src/mess/view/pages/notification.phtml', [
             'profile'     => new ViewProfile($userId),
             'invitations' => $invitations,
         ]);

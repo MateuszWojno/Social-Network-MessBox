@@ -25,7 +25,7 @@ if ($session->userLoggedIn()) {
         $session->userLogOut();
     }
 
-    $view = new View('src/mess/view/pages/account.php', [
+    $view = new View('src/mess/view/pages/account.phtml', [
         'profile' => new ViewProfile($userId),
     ]);
     $view->render();

@@ -9,7 +9,7 @@ class ConversationView extends View
 {
     public function __construct(int $userId, array $messages, Validation $validation)
     {
-        parent::__construct('src/mess/view/pages/conversation.php', [
+        parent::__construct('src/mess/view/pages/conversation.phtml', [
             'profile'    => new ViewProfile($userId),
             'messages'   => $messages,
             'validation' => $validation,

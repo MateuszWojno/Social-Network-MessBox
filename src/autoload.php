@@ -32,9 +32,6 @@ function iterateFiles(string $folderName): Generator
 $deferred = [];
 
 foreach (iterateFiles('mess') as $file) {
-    if (isFileInFolder($file, ['mess', 'view', 'pages'])) {
-        continue;
-    }
     if ($file->getExtension() === 'php') {
         try {
             require $file;

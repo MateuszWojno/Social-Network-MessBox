@@ -8,7 +8,7 @@ class PhotoView extends View
 {
     public function __construct(int $userId, array $photo)
     {
-        parent::__construct('src/mess/view/pages/photo.php', [
+        parent::__construct('src/mess/view/pages/photo.phtml', [
             'profile' => new ViewProfile($userId),
             'photo'   => $photo,
         ]);

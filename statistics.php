@@ -20,7 +20,7 @@ if ($session->userLoggedIn()) {
     $statistics = new Statistics($statisticsRepository);
     $userStatistics = $statistics->userStatistics($session->userId());
 
-    $view = new View('src/mess/view/pages/statistics.php', [
+    $view = new View('src/mess/view/pages/statistics.phtml', [
         'profile'    => new ViewProfile($session->userId()),
         'statistics' => $userStatistics,
     ]);

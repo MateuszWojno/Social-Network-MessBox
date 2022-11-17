@@ -10,7 +10,7 @@ class RegistrationView extends View
 
     public function __construct(Action $registration)
     {
-        parent::__construct('src/mess/view/pages/registration.php', [
+        parent::__construct('src/mess/view/pages/registration.phtml', [
             'registration' => $registration,
         ]);
         $this->validation = $registration->validationAttributes([

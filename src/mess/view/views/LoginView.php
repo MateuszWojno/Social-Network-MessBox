@@ -10,7 +10,7 @@ class LoginView extends View
 
     public function __construct(Validation $validation)
     {
-        parent::__construct('src/mess/view/pages/login.php', [
+        parent::__construct('src/mess/view/pages/login.phtml', [
 
         ]);
 

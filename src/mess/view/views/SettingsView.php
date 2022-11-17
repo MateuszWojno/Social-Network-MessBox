@@ -11,7 +11,7 @@ class SettingsView extends View
 
     public function __construct(int $userId, Validation $validation)
     {
-        parent::__construct('src/mess/view/pages/settings.php', [
+        parent::__construct('src/mess/view/pages/settings.phtml', [
             'profile' => new ViewProfile($userId),
         ]);
         $this->validation = new ValidationAttributes($validation, [

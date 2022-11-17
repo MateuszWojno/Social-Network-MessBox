@@ -12,7 +12,7 @@ class ProfileView extends View
 {
     public function __construct(int $userId, User $user, Validation $validation, array $posts, FriendStatus $friendStatus)
     {
-        parent::__construct('src/mess/view/pages/profile.php', [
+        parent::__construct('src/mess/view/pages/profile.phtml', [
             'profile'      => new ViewProfile($userId),
             'user'         => $user,
             'validation'   => $validation,

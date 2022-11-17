@@ -8,7 +8,7 @@ class FriendsView extends View
 {
     public function __construct(int $userId, array $friends, bool $areFriends)
     {
-        parent::__construct('src/mess/view/pages/friends.php', [
+        parent::__construct('src/mess/view/pages/friends.phtml', [
             'profile'    => new ViewProfile($userId),
             'friends'    => $friends,
             'areFriends' => $areFriends,
