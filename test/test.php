@@ -1,13 +1,57 @@
 <?php
+
+class HtmlContent
+{
+    private DOMXpath $xPath;
+
+    public function __construct(string $html)
+    {
+        $this->xPath = new \DOMXpath($this->document($html));
+    }
+
+    private function document(string $html): DomDocument
+    {
+        $document = new \DomDocument();
+        @$document->loadHTML($html);
+        return $document;
+    }
+
+    public function element(string $selector): string
+    {
+        $elements = $this->elements($selector);
+        if (empty($elements)) {
+            throw new Exception("Failed to find element matching '$selector'");
+        }
+        $count = count($elements);
+        if ($count === 1) {
+            return $elements[0];
+        }
+        throw new Exception("Failed to match selector '$selector' uniquely, $count elements matched");
+    }
+
+    public function elements(string $selector): array
+    {
+        $elements = $this->xPath->query($selector);
+        if ($elements === false) {
+            throw new Exception("Malformed xPath selector: '$selector'");
+        }
+        $results = [];
+        foreach ($elements as $element) {
+            foreach ($element->childNodes as $node) {
+                $results[] = $node->nodeValue;
+            }
+        }
+        return $results;
+    }
+}
+
 ob_start();
 require 'index.php';
 $renderedContent = ob_get_clean();
 
-$dom = new DomDocument();
+$html = new HtmlContent($renderedContent);
 
-@$dom->loadHTML($renderedContent);
-$xpath = new DOMXpath($dom);
-$content = element($xpath, "/html/head/title");
+$content = $html->element("/html/head/title");
 
 $expected = 'MessBox';
 if (trim($content) === $expected) {
@@ -15,7 +59,7 @@ if (trim($content) === $expected) {
 } else {
     echo "Test failed - expected '$expected', but '$content' given" . PHP_EOL;
 }
-$content = element($xpath, "//h1");
+$content = $html->element("//h1");
 
 $expected = 'NAWIĄŻ KONTAKTY Z MILIONAMI LUDZI NA CAŁYM ŚWIECIE';
 if (trim($content) === $expected) {
@@ -24,7 +68,7 @@ if (trim($content) === $expected) {
     echo "Test failed - expected '$expected', but '$content' given" . PHP_EOL;
 }
 
-$content = elements($xpath, "/html/body/nav/div/ul/li/a");
+$content = $html->elements("/html/body/nav/div/ul/li/a");
 
 $expected = ['Startowa', 'Logowanie', 'Rejestracja'];
 $trimmedContent = [];
