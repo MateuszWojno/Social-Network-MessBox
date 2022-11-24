@@ -55,65 +55,35 @@ function renderedPage(string $entryPoint): string
 $html = new HtmlContent(renderedPage('index.php'));
 
 $content = $html->element("/html/head/title");
+assertEquals('MessBox', $content);
 
-$expected = 'MessBox';
-if (trim($content) === $expected) {
-    echo "Test passed" . PHP_EOL;
-} else {
-    echo "Test failed - expected '$expected', but '$content' given" . PHP_EOL;
-}
 $content = $html->element("//h1");
-
-$expected = 'NAWIĄŻ KONTAKTY Z MILIONAMI LUDZI NA CAŁYM ŚWIECIE';
-if (trim($content) === $expected) {
-    echo "Test passed" . PHP_EOL;
-} else {
-    echo "Test failed - expected '$expected', but '$content' given" . PHP_EOL;
-}
+assertEquals('NAWIĄŻ KONTAKTY Z MILIONAMI LUDZI NA CAŁYM ŚWIECIE', $content);
 
 $content = $html->elements("/html/body/nav/div/ul/li/a");
+assertArrayEquals(['Startowa', 'Logowanie', 'Rejestracja'], $content);
 
-$expected = ['Startowa', 'Logowanie', 'Rejestracja'];
-$trimmedContent = [];
-foreach ($content as $item) {
-    $trimmedContent[] = trim($item);
-}
-
-if ($trimmedContent === $expected) {
-    echo "Test passed" . PHP_EOL;
-} else {
-    $contentFormat = var_export($content, true);
-    $expectedFormat = var_export($expected, true);
-
-    echo "Test failed - expected $expectedFormat, but given $contentFormat" . PHP_EOL;
-}
-
-function element(DOMXPath $xpath, string $selector): string
+function assertEquals(string $expected, string $content): void
 {
-    $elements = elements($xpath, $selector);
-    if (empty($elements)) {
-        throw new Exception("Failed to find element matching '$selector'");
+    if (trim($content) === $expected) {
+        echo "Test passed" . PHP_EOL;
+    } else {
+        echo "Test failed - expected '$expected', but '$content' given" . PHP_EOL;
     }
-    $count = count($elements);
-    if ($count === 1) {
-        return $elements[0];
-    }
-    throw new Exception("Failed to match selector '$selector' uniquely, $count elements matched");
 }
 
-function elements(DOMXPath $xpath, string $selector): array
+function assertArrayEquals(array $expected, array $content): void
 {
-    $elements = $xpath->query($selector);
+    $trimmedContent = [];
+    foreach ($content as $item) {
+        $trimmedContent[] = trim($item);
+    }
+    if ($trimmedContent === $expected) {
+        echo "Test passed" . PHP_EOL;
+    } else {
+        $contentFormat = var_export($content, true);
+        $expectedFormat = var_export($expected, true);
 
-    if ($elements === false) {
-        throw new Exception("Malformed xPath selector: '$selector'");
+        echo "Test failed - expected $expectedFormat, but given $contentFormat" . PHP_EOL;
     }
-    $results = array();
-    foreach ($elements as $element) {
-        $nodes = $element->childNodes;
-        foreach ($nodes as $node) {
-            $results[] = $node->nodeValue;
-        }
-    }
-    return $results;
 }
