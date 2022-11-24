@@ -16,24 +16,24 @@ class HtmlContent
         return $document;
     }
 
-    public function element(string $selector): string
+    public function element(string $xPath): string
     {
-        $elements = $this->elements($selector);
+        $elements = $this->elements($xPath);
         if (empty($elements)) {
-            throw new Exception("Failed to find element matching '$selector'");
+            throw new Exception("Failed to find element matching '$xPath'");
         }
         $count = count($elements);
         if ($count === 1) {
             return $elements[0];
         }
-        throw new Exception("Failed to match selector '$selector' uniquely, $count elements matched");
+        throw new Exception("Failed to match selector '$xPath' uniquely, $count elements matched");
     }
 
-    public function elements(string $selector): array
+    public function elements(string $xPath): array
     {
-        $elements = $this->xPath->query($selector);
+        $elements = $this->xPath->query($xPath);
         if ($elements === false) {
-            throw new Exception("Malformed xPath selector: '$selector'");
+            throw new Exception("Malformed xPath selector: '$xPath'");
         }
         $results = [];
         foreach ($elements as $element) {
@@ -45,11 +45,14 @@ class HtmlContent
     }
 }
 
-ob_start();
-require 'index.php';
-$renderedContent = ob_get_clean();
+function renderedPage(string $entryPoint): string
+{
+    \ob_start();
+    require $entryPoint;
+    return \ob_get_clean();
+}
 
-$html = new HtmlContent($renderedContent);
+$html = new HtmlContent(renderedPage('index.php'));
 
 $content = $html->element("/html/head/title");
 
