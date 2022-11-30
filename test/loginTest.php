@@ -8,7 +8,12 @@ function renderedPage(string $entryPoint): string
     return \ob_get_clean();
 }
 
-$html = new HtmlContent(renderedPage('login.php'));
+function openPage(string $entryPoint): HtmlContent
+{
+    return new HtmlContent(renderedPage($entryPoint));
+}
+
+$html = openPage('login.php');
 
 $content = $html->elements("/html/body/nav/div/ul/li/a");
 assertArrayEquals(['Startowa', 'Logowanie', 'Rejestracja'], $content);

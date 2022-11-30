@@ -8,7 +8,12 @@ function renderedPage(string $entryPoint): string
     return \ob_get_clean();
 }
 
-$html = new HtmlContent(renderedPage('index.php'));
+function openPage(string $entryPoint): HtmlContent
+{
+    return new HtmlContent(renderedPage($entryPoint));
+}
+
+$html = openPage('index.php');
 
 $content = $html->element("/html/head/title");
 assertEquals('MessBox', $content);
