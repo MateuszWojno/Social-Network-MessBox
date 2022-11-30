@@ -13,6 +13,22 @@ function openPage(string $entryPoint): HtmlContent
     return new HtmlContent(renderedPage($entryPoint));
 }
 
+$registrationRequest = [
+    'login'          => 'Jan',
+    'password'       => 'aa',
+    'passwordRepeat' => 'aaaaa',
+    'firstName'      => 'Jan',
+    'lastName'       => 'Mic',
+    'email'          => 'mail@mail',
+    'phoneNumber'    => '000000000',
+    'birthDate'      => '01.01.2011',
+    'gender'         => 'mężczyzna',
+    'avatar'         => 'avatar.jpg',
+    'signUp'         => 1
+];
+
+$_POST = $registrationRequest;
+
 $html = openPage('registration.php');
 
 $content = $html->elements("/html/body/nav/div/ul/li/a");
@@ -23,6 +39,9 @@ assertEquals('Rejestracja', $content);
 
 $content = $html->element("/html/body/div/form/div/button");
 assertEquals("Zarejestruj", $content);
+
+$content = $html->elements("//span[@class='error']");
+assertArrayEquals(['', '', '', '', '', '', '', '', '', ''], $content);
 
 function assertEquals(string $expected, string $content): void
 {
