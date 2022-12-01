@@ -40,6 +40,19 @@ class HtmlContent
         return $results;
     }
 
+    public function exists(string $xPath): bool
+    {
+        $elements = $this->elements($xPath);
+        if (empty($elements)) {
+            return false;
+        }
+        $count = count($elements);
+        if ($count === 1) {
+            return true;
+        }
+        throw new Exception("Failed to match selector '$xPath' uniquely, $count elements matched");
+    }
+
     private function query(string $xPath): mixed
     {
         $elements = $this->xPath->query($xPath);

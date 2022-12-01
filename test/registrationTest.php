@@ -8,12 +8,13 @@ function renderedPage(string $entryPoint): string
     return \ob_get_clean();
 }
 
-function openPage(string $entryPoint): HtmlContent
+function openPageParameters(string $entryPoint, array $post): HtmlContent
 {
+    $_POST = $post;
     return new HtmlContent(renderedPage($entryPoint));
 }
 
-$registrationRequest = [
+$html = openPageParameters('registration.php', [
     'login'          => 'Jan',
     'password'       => 'aaaaaa',
     'passwordRepeat' => 'aaaaaa',
@@ -25,11 +26,7 @@ $registrationRequest = [
     'gender'         => 'kobieta',
     'avatar'         => 'avatar.jpg',
     'signUp'         => 1
-];
-
-$_POST = $registrationRequest;
-
-$html = openPage('registration.php');
+]);
 
 $content = $html->elements("/html/body/nav/div/ul/li/a");
 assertArrayEquals(['Startowa', 'Logowanie', 'Rejestracja'], $content);
@@ -132,6 +129,11 @@ assertArrayEquals(['Wybierz płeć'], $content);
 
 $content = $html->elements("//span[@class='error']");
 assertArrayEquals(['Nieprawidłowe rozszerzenie pliku'], $content);
+
+if ($html->exists("//div[@class='success']") === true) {
+    $content = $html->element("//div[@class='success']");
+    assertEquals('Pomyślna rejestracja', $content);
+}
 
 function assertEquals(string $expected, string $content): void
 {
