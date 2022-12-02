@@ -72,7 +72,7 @@ $getView = function (PDO $pdo, RegistrationRepository $registration, Registratio
         $request->avatar(),
         $request->phoneNumber(),
         $request->date(),
-        $request->gender(),
+        $request->gender() === 'Mężczyzna' ? 'M' : 'K',
         date("Y-m-d:H:i:s")));
 
     return new RegistrationView(Action::success('Pomyślna rejestracja'));
