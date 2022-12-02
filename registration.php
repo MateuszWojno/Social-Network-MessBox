@@ -29,8 +29,7 @@ use Mess\View\Views\RegistrationView;
 
 $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
-function getView(PDO $pdo, RegistrationRepository $registration, RegistrationRequest $request): View
-{
+$getView = function (PDO $pdo, RegistrationRepository $registration, RegistrationRequest $request): View {
     if (!$request->wantsSignUp()) {
         return new RegistrationView(Action::clean());
     }
@@ -77,7 +76,7 @@ function getView(PDO $pdo, RegistrationRepository $registration, RegistrationReq
         date("Y-m-d:H:i:s")));
 
     return new RegistrationView(Action::success('Pomyślna rejestracja'));
-}
+};
 
-$view = getView($string->getPdo(), new RegistrationRepository($string->getPdo()), new RegistrationRequest($_POST));
+$view = $getView($string->getPdo(), new RegistrationRepository($string->getPdo()), new RegistrationRequest($_POST));
 $view->render();
