@@ -17,6 +17,6 @@ class DateLaterThanYears implements Constraint
 
     public function addError(ValidationErrors $errors): void
     {
-        $errors->addError('numberPhone', 'Nie masz ukończonych 10 lat');
+        $errors->addError('birthDate', 'Nie masz ukończonych 10 lat');
     }
 }
