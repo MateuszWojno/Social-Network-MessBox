@@ -17,6 +17,6 @@ class NonDuplicateEmail implements Constraint
 
     public function addError(ValidationErrors $errors): void
     {
-        $errors->addError('email', 'Podany email już istneije');
+        $errors->addError('email', 'Podany email już istnieje');
     }
 }

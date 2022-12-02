@@ -16,6 +16,6 @@ class FormatFirstName implements Constraint
 
     public function addError(ValidationErrors $errors): void
     {
-        $errors->addError('firstName', 'Niepoprawne nazwisko');
+        $errors->addError('firstName', 'Niepoprawne imię');
     }
 }
