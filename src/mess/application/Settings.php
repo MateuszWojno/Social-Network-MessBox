@@ -19,7 +19,7 @@ use Mess\Persistence\Database\User\PlaceUpdateRepository;
 use Mess\Persistence\Database\User\RelationshipUpdateRepository;
 use Mess\Persistence\Database\User\SchoolUpdateRepository;
 use Mess\Persistence\Database\User\WorkUpdateRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 
 class Settings
 {
@@ -36,7 +36,7 @@ class Settings
     {
     }
 
-    public function operations(SettingsRequest $request, Session $session): array
+    public function operations(SettingsRequest $request, HttpSession $session): array
     {
         if ($request->wantsSubmitSettings()) {
             return $this->userOperations($request, $session->userId());

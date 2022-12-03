@@ -4,14 +4,14 @@ require_once 'src/autoload.php';
 
 use Mess\Application\ViewProfile;
 use Mess\Application\Statistics;
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\User\UserStatisticsRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\View;
 
-$session = new Session();
+$session = new HttpSession();
 
 $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
@@ -26,6 +26,6 @@ if ($session->userLoggedIn()) {
     ]);
     $view->render();
 } else {
-    $header = Header::homepage();
+    $header = HttpHeader::homepage();
     $header->send();
 }

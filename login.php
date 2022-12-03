@@ -2,13 +2,13 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Http\Requests\LoginRequest;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\User\SignInRepository;
 use Mess\Persistence\Database\User\StatisticsRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\Validation;
 use Mess\View\View;
 use Mess\View\Views\EmptyView;
@@ -26,12 +26,12 @@ function getView(SignInRepository $signIn, LoginRequest $request, StatisticsRepo
             return new LoginView(Validation::failure('password', 'Hasło nie może być puste'));
         }
         if (password_verify($request->password(), $signIn->passwordHash($request->login()))) {
-            $session = new Session();
+            $session = new HttpSession();
             $userId = $signIn->userId($request->login());
             $session->userLogIn($userId);
             $statistics->setStatus($request->login());
             $statistics->setCountLogging($request->login());
-            $header = Header::profile($userId);
+            $header = HttpHeader::profile($userId);
             $header->send();
 
             return new EmptyView();

@@ -2,23 +2,23 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Http\Requests\PhotoRequest;
 use Mess\Http\Requests\UserIdRequest;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\PhotoReaction\PhotoReactionRepository;
 use Mess\Persistence\Database\PhotoReaction\PhotoRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\View;
 use Mess\View\Views\PhotoView;
 
-$session = new Session();
+$session = new HttpSession();
 
 if ($session->userLoggedIn()) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
-    function getView(PDO $pdo, Session $session, PhotoRequest $photoRequest, PhotoRepository $photoRepository, UserIdRequest $id): View
+    function getView(PDO $pdo, HttpSession $session, PhotoRequest $photoRequest, PhotoRepository $photoRepository, UserIdRequest $id): View
     {
         $reaction = new PhotoReactionRepository($pdo);
 
@@ -33,6 +33,6 @@ if ($session->userLoggedIn()) {
     $view = getView($string->getPdo(), $session, new PhotoRequest($_POST), new PhotoRepository($string->getPdo()), new UserIdRequest($_GET));
     $view->render();
 } else {
-    $header = Header::homepage();
+    $header = HttpHeader::homepage();
     $header->send();
 }

@@ -3,7 +3,7 @@
 require_once 'src/autoload.php';
 
 use Mess\Application\Profile;
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Http\Requests\ProfileRequest;
 use Mess\Http\Requests\UserIdRequest;
 use Mess\Persistence\ConnectionString;
@@ -13,18 +13,18 @@ use Mess\Persistence\Database\PostReaction\PostReactionRepository;
 use Mess\Persistence\Database\PostReaction\PostRepository;
 use Mess\Persistence\Database\User\FriendStatusRepository;
 use Mess\Persistence\Database\User\UserReadRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\View;
 use Mess\View\Views\ProfileView;
 use Mess\View\Views\ValidationErrors;
 
-$session = new Session();
+$session = new HttpSession();
 
 if ($session->userLoggedIn()) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
     function getView(ProfileRequest $request,
-                     Session        $session,
+                     HttpSession    $session,
                      Profile        $profile): View
     {
         $errors = new ValidationErrors();
@@ -55,6 +55,6 @@ if ($session->userLoggedIn()) {
     $view->render();
 
 } else {
-    $header = Header::homepage();
+    $header = HttpHeader::homepage();
     $header->send();
 }

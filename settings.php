@@ -3,7 +3,7 @@
 require_once 'src/autoload.php';
 
 use Mess\Application\Settings;
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Http\Requests\SettingsRequest;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
@@ -15,16 +15,16 @@ use Mess\Persistence\Database\User\PlaceUpdateRepository;
 use Mess\Persistence\Database\User\RelationshipUpdateRepository;
 use Mess\Persistence\Database\User\SchoolUpdateRepository;
 use Mess\Persistence\Database\User\WorkUpdateRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\View;
 use Mess\View\Views\SettingsView;
 use Mess\View\Views\ValidationErrors;
 
-$session = new Session();
+$session = new HttpSession();
 $string = new ConnectionString(new CredentialsFile("connection.txt"));
 
 if ($session->userLoggedIn()) {
-    function getView(SettingsRequest $request, Session $session, Settings $settings): View
+    function getView(SettingsRequest $request, HttpSession $session, Settings $settings): View
     {
         $errors = new ValidationErrors();
         foreach ($settings->operations($request, $session) as $operation) {
@@ -46,6 +46,6 @@ if ($session->userLoggedIn()) {
     $view = getView(new SettingsRequest($_POST), $session, $settings);
     $view->render();
 } else {
-    $header = Header::homepage();
+    $header = HttpHeader::homepage();
     $header->send();
 }

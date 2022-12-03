@@ -10,7 +10,7 @@ use Mess\Persistence\Database\Post\PostRepository;
 use Mess\Persistence\Database\PostReaction\PostReactionRepository;
 use Mess\Persistence\Database\User\FriendStatusRepository;
 use Mess\Persistence\Database\User\UserReadRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 
 class Profile
 {
@@ -25,7 +25,7 @@ class Profile
     {
     }
 
-    public function operations(Session $session): array
+    public function operations(HttpSession $session): array
     {
         $operations = [];
         if ($this->request->wantsAddFriend()) {

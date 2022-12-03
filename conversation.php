@@ -2,19 +2,19 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Http\Header;
+use Mess\Http\HttpHeader;
 use Mess\Http\Requests\ConversationRequest;
 use Mess\Http\Requests\UserIdRequest;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
 use Mess\Persistence\Database\Message\MessageReactionRepository;
 use Mess\Persistence\Database\Message\MessageRepository;
-use Mess\Persistence\Session\Session;
+use Mess\Persistence\Session\HttpSession;
 use Mess\View\Validation;
 use Mess\View\View;
 use Mess\View\Views\ConversationView;
 
-$session = new Session();
+$session = new HttpSession();
 
 if ($session->userLoggedIn()) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
@@ -22,7 +22,7 @@ if ($session->userLoggedIn()) {
     function getView(ConversationRequest       $conversationRequest,
                      MessageReactionRepository $messageReaction,
                      MessageRepository         $messageRepository,
-                     Session                   $session): View
+                     HttpSession               $session): View
     {
         if ($conversationRequest->wantsSubmit()) {
             if ($conversationRequest->message() === '') {
@@ -42,6 +42,6 @@ if ($session->userLoggedIn()) {
         $session);
     $view->render();
 } else {
-    $header = Header::homepage();
+    $header = HttpHeader::homepage();
     $header->send();
 }
