@@ -31,7 +31,7 @@ class UserReadRepository
                 $row['last_name'],
                 $row['avatar'],
                 $row['birth_date'],
-                $row['gender'],
+                $row['gender'] === 'M' ? 'Mężczyzna' : 'Kobieta',
                 $row['email'],
                 $row['school'],
                 $row['work'],
