@@ -3,7 +3,7 @@ namespace Mess\Persistence\Session;
 
 use Exception;
 
-class HttpSession
+class HttpSession implements Session
 {
     public function __construct()
     {
