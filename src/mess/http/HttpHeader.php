@@ -1,7 +1,7 @@
 <?php
 namespace Mess\Http;
 
-class HttpHeader
+class HttpHeader implements Header
 {
     private function __construct(private string $url)
     {

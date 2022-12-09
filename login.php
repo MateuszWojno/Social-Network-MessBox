@@ -2,7 +2,8 @@
 
 require_once 'src/autoload.php';
 
-use Mess\Http\HttpHeader;
+use Mess\Http\Headers;
+use Mess\Http\HttpHeaders;
 use Mess\Http\Requests\LoginRequest;
 use Mess\Persistence\ConnectionString;
 use Mess\Persistence\CredentialsFile;
@@ -15,9 +16,9 @@ use Mess\View\View;
 use Mess\View\Views\EmptyView;
 use Mess\View\Views\LoginView;
 
-$login = function (Session $session) {
+$login = function (Headers $headers, Session $session) {
     $string = new ConnectionString(new CredentialsFile("connection.txt"));
-    $loginView = function (SignInRepository $signIn, LoginRequest $request, StatisticsRepository $statistics, $session): View {
+    $loginView = function (SignInRepository $signIn, LoginRequest $request, StatisticsRepository $statistics, Session $session, Headers $headers): View {
         if ($request->isSignIn()) {
             if ($request->login() === '' || !$signIn->loginExists($request->login())) {
                 return new LoginView(Validation::failure('login', 'Niepoprawny login'));
@@ -30,8 +31,8 @@ $login = function (Session $session) {
                 $session->userLogIn($userId);
                 $statistics->setStatus($request->login());
                 $statistics->setCountLogging($request->login());
-                $header = HttpHeader::profile($userId);
-                $header->send();
+                $profile = $headers->profile($userId);
+                $profile->send();
 
                 return new EmptyView();
             }
@@ -40,8 +41,8 @@ $login = function (Session $session) {
         return new LoginView(Validation::success());
     };
 
-    $view = $loginView(new SignInRepository($string->getPdo()), new LoginRequest($_POST), new StatisticsRepository($string->getPdo()), $session);
+    $view = $loginView(new SignInRepository($string->getPdo()), new LoginRequest($_POST), new StatisticsRepository($string->getPdo()), $session, $headers);
     $view->render();
 };
 
-$login (new HttpSession());
+$login (new HttpHeaders(), new HttpSession());

@@ -1,7 +1,7 @@
 <?php
 namespace Mess\Http;
 
-class HttpHeaders
+class HttpHeaders implements Headers
 {
     public function profile(int $userId): HttpHeader
     {
