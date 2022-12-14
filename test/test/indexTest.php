@@ -1,6 +1,6 @@
 <?php
-require "page.php";
-require "assert.php";
+require __DIR__ . "/../fixture/page.php";
+require __DIR__ . "/../fixture/assert.php";
 
 $html = openPage('index.php');
 
